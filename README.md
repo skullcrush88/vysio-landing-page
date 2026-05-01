@@ -4,7 +4,7 @@ A premium, Awwwards-level landing page for Vysio - an AI-powered system that con
 
 ## 🎨 Design Features
 
-- **Webild-Inspired Design**: Soft sky/cloud aesthetic with glassmorphism elements
+- **Premium Design**: Soft sky/cloud aesthetic with glassmorphism elements
 - **Smooth Scrolling**: Lenis integration for buttery-smooth scroll experience
 - **Scroll Animations**: Framer Motion powered fade-in and slide-up effects
 - **Parallax Background**: Sky image with subtle parallax effect
