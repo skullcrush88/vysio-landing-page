@@ -88,28 +88,28 @@ export default function MultiAgent() {
 
         {/* Connection Lines Visualization */}
         <ScrollReveal delay={0.4}>
-          <div className="mt-16 text-center">
+          <div className="mt-16 flex justify-center">
             <div
-              className="inline-flex items-center gap-4 px-8 py-4 rounded-full"
+              className="w-full max-w-md flex flex-col gap-4 px-8 py-6 rounded-3xl"
               style={{
                 backgroundColor: 'rgba(255, 255, 255, 0.5)',
                 backdropFilter: 'blur(12px)',
                 border: '1px solid rgba(255, 255, 255, 0.3)'
               }}
             >
-              <div className="flex items-center gap-2">
-                <div className="w-3 h-3 rounded-full animate-pulse" style={{ backgroundColor: '#0a0a0a' }} />
-                <span className="text-sm" style={{ color: '#334155', fontWeight: 500 }}>Agents Collaborate</span>
+              <div className="flex items-center gap-3">
+                <div className="w-4 h-4 rounded-full animate-pulse" style={{ backgroundColor: '#0a0a0a' }} />
+                <span className="text-base" style={{ color: '#334155', fontWeight: 500 }}>Agents Collaborate</span>
               </div>
-              <div className="w-px h-6" style={{ backgroundColor: '#cbd5e1' }} />
-              <div className="flex items-center gap-2">
-                <div className="w-3 h-3 rounded-full animate-pulse animation-delay-200" style={{ backgroundColor: '#0a0a0a' }} />
-                <span className="text-sm" style={{ color: '#334155', fontWeight: 500 }}>Real-time Processing</span>
+              <div className="w-full h-px" style={{ backgroundColor: '#cbd5e1' }} />
+              <div className="flex items-center gap-3">
+                <div className="w-4 h-4 rounded-full animate-pulse animation-delay-200" style={{ backgroundColor: '#0a0a0a' }} />
+                <span className="text-base" style={{ color: '#334155', fontWeight: 500 }}>Real-time Processing</span>
               </div>
-              <div className="w-px h-6" style={{ backgroundColor: '#cbd5e1' }} />
-              <div className="flex items-center gap-2">
-                <div className="w-3 h-3 rounded-full animate-pulse animation-delay-400" style={{ backgroundColor: '#0a0a0a' }} />
-                <span className="text-sm" style={{ color: '#334155', fontWeight: 500 }}>Instant Results</span>
+              <div className="w-full h-px" style={{ backgroundColor: '#cbd5e1' }} />
+              <div className="flex items-center gap-3">
+                <div className="w-4 h-4 rounded-full animate-pulse animation-delay-400" style={{ backgroundColor: '#0a0a0a' }} />
+                <span className="text-base" style={{ color: '#334155', fontWeight: 500 }}>Instant Results</span>
               </div>
             </div>
           </div>

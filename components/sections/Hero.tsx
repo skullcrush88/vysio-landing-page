@@ -1,11 +1,21 @@
 'use client'
 
+import { useState, useEffect } from 'react'
 import { Upload, ImagePlus } from 'lucide-react'
 import Input from '@/components/ui/Input'
 import Button from '@/components/ui/Button'
 import { motion } from 'framer-motion'
 
 export default function Hero() {
+  const [isMobile, setIsMobile] = useState(false)
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768)
+    checkMobile()
+    window.addEventListener('resize', checkMobile)
+    return () => window.removeEventListener('resize', checkMobile)
+  }, [])
+
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
       
@@ -56,7 +66,14 @@ export default function Hero() {
             style={{ marginTop: '1.25rem' }}
           >
             <Input
-              placeholder="Upload an image or paste a link..."
+              placeholder={isMobile ? '' : 'Upload an image or paste a link...'}
+              customPlaceholder={
+                isMobile ? (
+                  <div className="animate-marquee whitespace-nowrap">
+                    Upload an image or paste a link...
+                  </div>
+                ) : undefined
+              }
               icon={<Upload size={20} />}
               button={
                 <button
