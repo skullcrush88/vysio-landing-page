@@ -1,6 +1,5 @@
 'use client'
 
-import { useEffect } from 'react'
 import { useLenis } from '@/lib/lenis'
 import Navbar from '@/components/layout/Navbar'
 import Footer from '@/components/layout/Footer'
@@ -17,7 +16,7 @@ export default function Home() {
   useLenis()
 
   return (
-    <main className="relative">
+    <main className="relative page-bg">
       {/* Mouse Glow Effect */}
       <MouseGlow />
 
@@ -27,26 +26,23 @@ export default function Home() {
       {/* Hero Section */}
       <Hero />
 
-      {/* Site Body - All sections below hero with background */}
-      <div className="site-body">
-        {/* How It Works */}
-        <HowItWorks />
+      {/* How It Works */}
+      <HowItWorks />
 
-        {/* Multi-Agent System */}
-        <MultiAgent />
+      {/* Multi-Agent System */}
+      <MultiAgent />
 
-        {/* Output Preview */}
-        <OutputPreview />
+      {/* Output Preview */}
+      <OutputPreview />
 
-        {/* Export Section */}
-        <Export />
+      {/* Export Section */}
+      <Export />
 
-        {/* Future Features */}
-        <FutureFeatures />
+      {/* Future Features */}
+      <FutureFeatures />
 
-        {/* Footer */}
-        <Footer />
-      </div>
+      {/* Footer */}
+      <Footer />
     </main>
   )
 }
