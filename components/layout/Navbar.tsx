@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Home, User, Cpu, Wrench, DollarSign, X, ChevronRight } from 'lucide-react'
 
@@ -55,6 +55,37 @@ const navItems = [
 export default function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null)
+  const [activeSection, setActiveSection] = useState<string>('#')
+
+  // Detect active section based on scroll position
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollPosition = window.scrollY + 100 // Offset for navbar height
+
+      // Check if at top of page
+      if (scrollPosition < 300) {
+        setActiveSection('#')
+        return
+      }
+
+      // Check each section
+      const sections = ['features', 'agents', 'how-it-works', 'pricing']
+      for (const sectionId of sections) {
+        const element = document.getElementById(sectionId)
+        if (element) {
+          const { offsetTop, offsetHeight } = element
+          if (scrollPosition >= offsetTop && scrollPosition < offsetTop + offsetHeight) {
+            setActiveSection(`#${sectionId}`)
+            return
+          }
+        }
+      }
+    }
+
+    handleScroll() // Initial check
+    window.addEventListener('scroll', handleScroll)
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
 
   return (
     <>
@@ -203,7 +234,7 @@ export default function Navbar() {
                   {/* Navigation Items */}
                   {navItems.map((item, index) => {
                     const Icon = item.icon
-                    const isActive = index === 0 // First item active by default
+                    const isActive = activeSection === item.href
                     
                     return (
                       <motion.a
@@ -238,9 +269,12 @@ export default function Navbar() {
                       animate={{ opacity: 1, x: 0 }}
                       exit={{ opacity: 0, x: -10 }}
                       transition={{ duration: 0.2 }}
-                      className="absolute left-24 top-0 pointer-events-none"
+                      className="absolute left-24 pointer-events-none"
                       style={{
-                        top: `${88 + hoveredIndex * 72}px`, // Position based on index
+                        // py-6 (24px) + close button (48px) + gap-6 (24px) + gap-6 (24px) + (index * 72px)
+                        // = 120px + (index * 72px) for center of first icon
+                        top: `${120 + hoveredIndex * 72}px`,
+                        transform: 'translateY(-50%)',
                       }}
                     >
                       <div
