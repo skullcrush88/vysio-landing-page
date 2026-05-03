@@ -1,6 +1,10 @@
+'use client'
+
 import type { Metadata } from 'next'
 import { Inter, Instrument_Serif } from 'next/font/google'
 import './globals.css'
+import { Provider } from 'react-redux'
+import { store } from '@/lib/store'
 
 const inter = Inter({
   subsets: ['latin'],
@@ -13,11 +17,6 @@ const instrumentSerif = Instrument_Serif({
   variable: '--font-instrument',
 })
 
-export const metadata: Metadata = {
-  title: 'Vysio - Turn Images into Production-Ready UI',
-  description: 'Transform images into clean, production-ready code using multi-agent AI intelligence. From pixels to code, instantly.',
-  keywords: ['AI', 'UI generation', 'code generation', 'design to code', 'HTML', 'CSS', 'React'],
-}
 
 export default function RootLayout({
   children,
@@ -27,7 +26,9 @@ export default function RootLayout({
   return (
     <html lang="en" className="lenis">
       <body className={`${inter.variable} ${instrumentSerif.variable} ${inter.className}`}>
-        {children}
+        <Provider store={store}>
+          {children}
+        </Provider>
       </body>
     </html>
   )

@@ -4,8 +4,20 @@ import { Download, FileCode, Sparkles } from 'lucide-react'
 import Button from '@/components/ui/Button'
 import GlassCard from '@/components/ui/GlassCard'
 import ScrollReveal from '@/components/effects/ScrollReveal'
+import { useDispatch, useSelector } from 'react-redux'
+import { downloadRequest } from '@/lib/features/download/downloadSlice'
+import { RootState } from '@/lib/store'
 
 export default function Export() {
+  const dispatch = useDispatch()
+  const generateState = useSelector((state: RootState) => state.generate)
+  const downloadState = useSelector((state: RootState) => state.download)
+
+  const handleExport = () => {
+    if (generateState.data?.downloadUrl) {
+      dispatch(downloadRequest({ downloadUrl: generateState.data.downloadUrl }))
+    }
+  }
   return (
     <section className="section-padding">
       <div className="container-custom">
@@ -109,7 +121,9 @@ export default function Export() {
 
               {/* CTA Button */}
               <button
-                className="text-lg px-10 py-4 rounded-full inline-flex items-center gap-2 hover:opacity-90 transition-opacity"
+                onClick={handleExport}
+                disabled={!generateState.data?.downloadUrl || downloadState.loading}
+                className="text-lg px-10 py-4 rounded-full inline-flex items-center gap-2 hover:opacity-90 transition-opacity disabled:opacity-50 disabled:cursor-not-allowed"
                 style={{
                   backgroundColor: '#0a0a0a',
                   color: '#ffffff',
@@ -117,8 +131,14 @@ export default function Export() {
                 }}
               >
                 <Download size={20} />
-                Export as ZIP
+                {downloadState.loading ? 'Downloading...' : 'Export as ZIP'}
               </button>
+              {downloadState.error && (
+                <p className="text-red-500 text-sm mt-4">{downloadState.error}</p>
+              )}
+              {!generateState.data?.downloadUrl && (
+                <p className="text-amber-600 text-sm mt-4">Please upload an image first to generate code</p>
+              )}
 
               <p className="text-sm mt-6" style={{ color: '#64748b' }}>
                 No credit card required • Free for early adopters

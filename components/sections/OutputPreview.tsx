@@ -1,12 +1,25 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Image as ImageIcon, Code2 } from 'lucide-react'
 import GlassCard from '@/components/ui/GlassCard'
 import ScrollReveal from '@/components/effects/ScrollReveal'
+import { useDispatch, useSelector } from 'react-redux'
+import { generateRequest } from '@/lib/features/generate/generateSlice'
+import { RootState } from '@/lib/store'
 
 export default function OutputPreview() {
   const [activeTab, setActiveTab] = useState<'html' | 'css'>('html')
+  const dispatch = useDispatch()
+  const uploadState = useSelector((state: RootState) => state.upload)
+  const generateState = useSelector((state: RootState) => state.generate)
+
+  // Auto-dispatch generateRequest after successful upload
+  useEffect(() => {
+    if (uploadState.data?.fileId && !generateState.loading && !generateState.data) {
+      dispatch(generateRequest({ fileId: uploadState.data.fileId }))
+    }
+  }, [uploadState.data, generateState.loading, generateState.data, dispatch])
 
   const htmlCode = `<div class="hero-section">
   <div class="container">

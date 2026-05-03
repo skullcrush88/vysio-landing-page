@@ -14,8 +14,10 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "@reduxjs/toolkit": "^2.11.2",
     "@studio-freight/lenis": "^1.0.42",
     "@tailwindcss/postcss": "^4.2.4",
+    "axios": "^1.16.0",
     "clsx": "^2.1.1",
     "critters": "^0.0.23",
     "framer-motion": "^12.38.0",
@@ -23,6 +25,8 @@
     "next": "^16.2.4",
     "react": "^19.2.5",
     "react-dom": "^19.2.5",
+    "react-redux": "^9.2.0",
+    "redux-saga": "^1.4.2",
     "tailwind-merge": "^3.5.0"
   },
   "devDependencies": {

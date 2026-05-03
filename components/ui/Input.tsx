@@ -6,9 +6,11 @@ interface InputProps {
   icon?: React.ReactNode
   button?: React.ReactNode
   customPlaceholder?: React.ReactNode
+  value?: string
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void
 }
 
-export default function Input({ placeholder, className, icon, button, customPlaceholder }: InputProps) {
+export default function Input({ placeholder, className, icon, button, customPlaceholder, value, onChange }: InputProps) {
   return (
     <div className="relative w-full">
       {icon && (
@@ -19,6 +21,8 @@ export default function Input({ placeholder, className, icon, button, customPlac
       <input
         type="text"
         placeholder={customPlaceholder ? '' : placeholder}
+        value={value}
+        onChange={onChange}
         className={cn(
           'glass-input',
           icon && 'pl-14',

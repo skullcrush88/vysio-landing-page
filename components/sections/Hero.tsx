@@ -1,13 +1,20 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { Upload, ImagePlus } from 'lucide-react'
 import Input from '@/components/ui/Input'
 import Button from '@/components/ui/Button'
 import { motion } from 'framer-motion'
+import { useDispatch, useSelector } from 'react-redux'
+import { uploadRequest } from '@/lib/features/upload/uploadSlice'
+import { RootState } from '@/lib/store'
 
 export default function Hero() {
   const [isMobile, setIsMobile] = useState(false)
+  const [urlInput, setUrlInput] = useState('')
+  const fileInputRef = useRef<HTMLInputElement>(null)
+  const dispatch = useDispatch()
+  const { loading, error } = useSelector((state: RootState) => state.upload)
 
   useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth < 768)
@@ -15,6 +22,24 @@ export default function Hero() {
     window.addEventListener('resize', checkMobile)
     return () => window.removeEventListener('resize', checkMobile)
   }, [])
+
+  const handleAddImage = () => {
+    if (urlInput.trim()) {
+      // Dispatch URL upload
+      dispatch(uploadRequest(urlInput.trim()))
+      setUrlInput('')
+    } else {
+      // Trigger file input
+      fileInputRef.current?.click()
+    }
+  }
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    if (file) {
+      dispatch(uploadRequest(file))
+    }
+  }
 
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
@@ -65,6 +90,13 @@ export default function Hero() {
             className="max-w-3xl mx-auto"
             style={{ marginTop: '1.25rem' }}
           >
+            <input
+              ref={fileInputRef}
+              type="file"
+              accept="image/*"
+              onChange={handleFileChange}
+              className="hidden"
+            />
             <Input
               placeholder={isMobile ? '' : 'Upload an image or paste a link...'}
               customPlaceholder={
@@ -75,19 +107,26 @@ export default function Hero() {
                 ) : undefined
               }
               icon={<Upload size={20} />}
+              value={urlInput}
+              onChange={(e) => setUrlInput(e.target.value)}
               button={
                 <button
-                  className="flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-all hover:scale-105"
+                  onClick={handleAddImage}
+                  disabled={loading}
+                  className="flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-all hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed"
                   style={{
                     backgroundColor: '#0a0a0a',
                     color: '#ffffff'
                   }}
                 >
                   <ImagePlus size={18} />
-                  Add Image
+                  {loading ? 'Uploading...' : 'Add Image'}
                 </button>
               }
             />
+            {error && (
+              <p className="text-red-500 text-sm mt-2 text-center">{error}</p>
+            )}
           </motion.div>
         </div>
       </div>
